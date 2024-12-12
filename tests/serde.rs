@@ -394,6 +394,19 @@ fn sequence_too_long() {
 }
 
 #[test]
+fn custom_sequence_length_limit() {
+    let seq = vec![0i32; 10];
+    let bytes = to_bytes(&seq).unwrap();
+    let res: Result<Vec<i32>, _> = bcs::de::Builder::new()
+        .max_sequence_length(9)
+        .deserialize_bytes(&bytes);
+    match res.unwrap_err() {
+        Error::ExceededMaxLen(len) => assert_eq!(len, 10),
+        _ => panic!(),
+    }
+}
+
+#[test]
 fn variable_lengths() {
     assert_eq!(to_bytes(&vec![(); 1]).unwrap(), vec![0x01]);
     assert_eq!(to_bytes(&vec![(); 128]).unwrap(), vec![0x80, 0x01]);
