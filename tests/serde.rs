@@ -767,7 +767,8 @@ fn test_recursion_limit() {
 
     // test customized limit
     let limit = 100;
-    let not_supported_err = Error::NotSupported("limit exceeds the max allowed depth");
+    let container_depth_limit_not_supported_err =
+        Error::NotSupported("container depth limit exceeds the max allowed depth");
     let l4 = List::integers(limit);
     assert_eq!(
         to_bytes_with_limit(&l4, limit),
@@ -775,7 +776,7 @@ fn test_recursion_limit() {
     );
     assert_eq!(
         to_bytes_with_limit(&l4, MAX_CONTAINER_DEPTH + 1),
-        Err(not_supported_err.clone()),
+        Err(container_depth_limit_not_supported_err.clone()),
     );
     let bytes = to_bytes_with_limit(&l4, limit + 1).unwrap();
     assert_eq!(
@@ -785,7 +786,7 @@ fn test_recursion_limit() {
     assert_eq!(from_bytes_with_limit(&bytes, limit + 1), Ok(l4));
     assert_eq!(
         from_bytes_with_limit::<List<usize>>(&bytes, MAX_CONTAINER_DEPTH + 1),
-        Err(not_supported_err)
+        Err(container_depth_limit_not_supported_err)
     );
 }
 
