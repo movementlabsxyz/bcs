@@ -28,7 +28,7 @@ BCS is also available in other programming languages, thanks to the separate pro
 ### Application to Cryptography
 
 The BCS format guarantees canonical serialization, meaning that for any given data type, there
-is a one-to-one correspondance between in-memory values and valid byte representations.
+is a one-to-one correspondence between in-memory values and valid byte representations.
 
 In the context of a cryptographic application, canonical serialization has several benefits:
 * It provides a natural and reliable way to associate in-memory values to cryptographic hashes.
@@ -41,7 +41,7 @@ using unique hash seeds for each data type. (See [Diem's cryptographic library](
 ### Backwards Compatibility
 
 By design, BCS does not provide implicit versioning or backwards/forwards compatibility, therefore
-applications must carefully plan in advance for adhoc extension points:
+applications must carefully plan in advance for ad hoc extension points:
 * Enums may be used for explicit versioning and backward compatibility (e.g. extensible query interfaces).
 * In some cases, data fields of type `Vec<u8>` may also be added to allow (future) unknown payloads
 in serialized form.
